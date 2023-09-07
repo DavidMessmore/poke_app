@@ -1,8 +1,10 @@
-# React + Vite
+# Poke App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This app allows the user to input up to six Pokémons and visualize the strengths and weaknesses of the team.
 
-Currently, two official plugins are available:
+I did this project for learning purposes, and it is inspired by the marriland website.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Here are a few things that i intend to add:
+
+- Allow the user to change the generations (currently it is only gen 9)
+- Allow the user to import the chart or the team itself

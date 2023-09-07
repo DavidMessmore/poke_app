@@ -12,8 +12,4 @@
   .light {
     @apply bg-white text-dark;
   }
-  /* }
-  .searchBar::-webkit-scrollbar {
-    display: none;
-  } */
 }
