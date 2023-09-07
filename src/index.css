@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-mono text-xl;
+  }
+  .dark {
+    @apply bg-dark text-sky-50;
+  }
+  .light {
+    @apply bg-white text-dark;
+  }
+  /* }
+  .searchBar::-webkit-scrollbar {
+    display: none;
+  } */
+}
