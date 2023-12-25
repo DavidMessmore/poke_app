@@ -1,99 +1,79 @@
-import { useCallback, useReducer } from "react";
-import { SET_POKE, RESET_POKE, SET_ABI } from "./actions";
-import SelectAll from "./SelectAll";
-import DisplayType from "./DisplayType";
-import reducer from "./reducer";
-import TableType from "./TableType";
+import { types, checkWeakness, typesClasses } from "./TypeChartLogic";
+import TableCell from "./TableCell";
 
-export const initialPokes = {
-  poke1: {
-    name: "",
-    sprite: "",
-    icon: "",
-    types: "",
-    ability: "",
-  },
-  poke2: {
-    name: "",
-    sprite: "",
-    icon: "",
-    types: "",
-    ability: "",
-  },
-  poke3: {
-    name: "",
-    sprite: "",
-    icon: "",
-    types: "",
-    ability: "",
-  },
-  poke4: {
-    name: "",
-    sprite: "",
-    icon: "",
-    types: "",
-    ability: "",
-  },
-  poke5: {
-    name: "",
-    sprite: "",
-    icon: "",
-    types: "",
-    ability: "",
-  },
-  poke6: {
-    name: "",
-    sprite: "",
-    icon: "",
-    types: "",
-    ability: "",
-  },
-};
-
-export const defaultState = {
-  pokes: initialPokes,
-  isLoading: false,
-  pokeKeys: Object.keys(initialPokes),
-};
-
-const Typechart = () => {
-  const [state, dispatch] = useReducer(reducer, defaultState);
-  const setPoke = useCallback(
-    (newPoke) => {
-      dispatch({ type: SET_POKE, payload: { newPoke } });
-    },
-    [dispatch]
-  );
-
-  const resetPoke = useCallback(() => {
-    dispatch({ type: RESET_POKE });
-  }, [dispatch]);
-
-  const setAbi = useCallback(
-    (newAbi) => {
-      dispatch({ type: SET_ABI, payload: { newAbi } });
-    },
-    [dispatch]
-  );
-
+const TypeChart = ({ team, pokeKeys }) => {
   return (
-    <section className="mt-12 flex flex-col h-full justify-between overflow-x-scroll xl:overflow-hidden">
-      <p className="text-center mb-6 font-black mx-1">
-        Choose a Pokemon to see his Defensive Coverage
-      </p>
-      <div className="flex flex-col items-center gap-10 lg:flex-row my-5 lg:justify-evenly">
-        <SelectAll
-          resetPoke={resetPoke}
-          setPoke={setPoke}
-          pokeKeys={state.pokeKeys}
-          pokes={state.pokes}
-          setAbi={setAbi}
-        />
-        <DisplayType pokes={state.pokes} pokeKeys={state.pokeKeys} />
+    <div className="table border-collapse border rounded-md mx-auto text-center font-black dark:border-stone-600 mb-20">
+      <div className="table-header-group">
+        <div className="table-row">
+          <div className="table-cell w-fit align-middle px-6">Types</div>
+          {pokeKeys.map((pokeKey) => {
+            return (
+              <div
+                className="table-cell min-w-[110px] align-middle p-1"
+                key={pokeKey}
+              >
+                {team[pokeKey].icon && (
+                  <img
+                    src={team[pokeKey].icon}
+                    alt={team[pokeKey].name}
+                    className="h-full w-24"
+                  />
+                )}
+              </div>
+            );
+          })}
+          <div className="table-cell w-fit align-middle p-1">
+            Total Weaknesses
+          </div>
+          <div className="table-cell w-fit align-middle p-1">
+            Total Resistances
+          </div>
+        </div>
       </div>
-      <p className="text-center my-4 font-black">Defensive Coverage</p>
-      <TableType pokes={state.pokes} pokeKeys={state.pokeKeys} />
-    </section>
+      <div className="table-row-group ">
+        {types.map((type) => {
+          let tw = 0;
+          let tr = 0;
+          const add = (a) => {
+            if (a === "") {
+              return;
+            }
+            if (a > 1) {
+              tw++;
+            }
+            if (a < 1) {
+              tr++;
+            }
+            return a;
+          };
+          return (
+            <div
+              key={type}
+              className="table-row divide-x divide-stone-300 odd:bg-stone-200 dark:divide-stone-600 dark:odd:bg-lessdark"
+            >
+              <div className={typesClasses[type]}>{type}</div>
+              {pokeKeys.map((pokeKey) => {
+                return (
+                  <TableCell
+                    key={pokeKey}
+                    value={add(
+                      checkWeakness(
+                        team[pokeKey].types,
+                        type,
+                        team[pokeKey].ability[team[pokeKey].ability.selected]
+                      )
+                    )}
+                  />
+                );
+              })}
+              <TableCell value={tw} t={"tw"} />
+              <TableCell value={tr} t={"tr"} />
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 };
-export default Typechart;
+export default TypeChart;

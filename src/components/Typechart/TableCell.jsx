@@ -7,7 +7,7 @@ const TableCell = ({ value, t = "" }) => {
       );
     }
     if (value > 0) {
-      return <div className="table-cell bg-red-400  p-1">{value}</div>;
+      return <div className="table-cell bg-red-400 p-1">{value}</div>;
     } else {
       return <div className="table-cell p-1">{value}</div>;
     }
@@ -24,7 +24,7 @@ const TableCell = ({ value, t = "" }) => {
   }
   if (value < 1) {
     if (value === 0) {
-      return <div className="table-cell p-1">Immune</div>;
+      return <div className="table-cell text-green-500 p-1">Immune</div>;
     }
     return (
       <div className="table-cell text-green-500 p-1">

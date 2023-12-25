@@ -1,1 +1,1 @@
-export { default } from "./Typechart";
+export { default } from "./TypeChart";

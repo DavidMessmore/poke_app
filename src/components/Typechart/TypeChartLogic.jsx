@@ -19,7 +19,7 @@ export const types = [
   "FAIRY",
 ];
 
-export const typesTail = {
+export const typesClasses = {
   NORMAL: "table-cell bg-[#a8a878] text-white",
   FIRE: "table-cell bg-[#f08030] text-white",
   WATER: "table-cell bg-[#6890f0] text-white",
@@ -92,11 +92,13 @@ export const checkWeakness = (myTypes, type, ab = "") => {
   if (ab) {
     if (ab[type.toLowerCase()] || ab[type.toLowerCase()] === 0) {
       final *= ab[type.toLowerCase()];
-    } else if (ab.weak) {
+    }
+    if (ab.weak) {
       if (final > 1) {
         final *= ab.weak;
       }
-    } else if (ab.notWeak) {
+    }
+    if (ab.notWeak === 0) {
       if (final < 2) {
         final *= ab.notWeak;
       }

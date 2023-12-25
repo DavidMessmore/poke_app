@@ -1,8 +1,6 @@
 import { memo, useRef, useState } from "react";
-import { useAppContext } from "../../../App";
 
-const SelectMon = ({ pokeKey, fetchPoke, setPoke, pokes, setAbi }) => {
-  const { pokeData } = useAppContext();
+const SelectMon = ({ pokeKey, fetchPoke, setPoke, team, setAbi, pokeData }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [selectedItem, setSelectedItem] = useState(-1);
   const filteredList = useRef(null);
@@ -73,11 +71,9 @@ const SelectMon = ({ pokeKey, fetchPoke, setPoke, pokes, setAbi }) => {
               <button
                 value={pokeName.name}
                 key={id}
-                className={
-                  selectedItem === id
-                    ? "hover:bg-stone-200 px-2 py-1 w-full capitalize focus:outline-stone-400 bg-stone-200"
-                    : "hover:bg-stone-200 px-2 py-1 w-full capitalize focus:outline-stone-400"
-                }
+                className={`hover:bg-stone-200 px-2 py-1 w-full capitalize focus:outline-stone-400 ${
+                  selectedItem === id ? "bg-stone-200" : ""
+                }`}
                 onClick={handleFetch}
               >
                 {pokeName.name}
@@ -86,17 +82,17 @@ const SelectMon = ({ pokeKey, fetchPoke, setPoke, pokes, setAbi }) => {
           })}
         </div>
       )}
-      {pokes[pokeKey].ability && (
+      {team[pokeKey].ability && (
         <div className="my-3 indent-2">
           <label htmlFor={"ability" + pokeKey} className=" ">
             Ability:
           </label>
           <select
             onChange={handleSelectAbi}
-            className=" bg-stone-500 text-white rounded-lg ml-2 py-1 px-3 "
+            className="bg-stone-500 text-white rounded-lg ml-2 py-1 px-3"
           >
             <option value="none">none</option>
-            {Object.keys(pokes[pokeKey].ability).map((ab, key) => {
+            {Object.keys(team[pokeKey].ability).map((ab, key) => {
               if (ab !== "selected") {
                 return (
                   <option value={ab} key={key}>

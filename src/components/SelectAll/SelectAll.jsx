@@ -1,10 +1,21 @@
-import { useRef, memo } from "react";
+import { useRef, memo, useState, useEffect } from "react";
 import axios from "axios";
 import SelectMon from "./SelectMon";
-import { abi } from "../TableType/TableTypeLogic";
+import { abi } from "../TypeChart/TypeChartLogic";
 
-const SelectAll = ({ resetPoke, setPoke, pokeKeys, pokes, setAbi }) => {
+const SelectAll = ({ resetPoke, setPoke, pokeKeys, team, setAbi }) => {
   const formRef = useRef(null);
+  const [pokeData, setPokeData] = useState([]);
+
+  useEffect(() => {
+    const url = " https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
+    axios
+      .get(url)
+      .then((res) => {
+        setPokeData(res.data.results);
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
 
   const fetchPoke = (name, pokeKey, setPoke) => {
     const url = `https://pokeapi.co/api/v2/pokemon/${name}`;
@@ -57,6 +68,7 @@ const SelectAll = ({ resetPoke, setPoke, pokeKeys, pokes, setAbi }) => {
     resetPoke();
     formRef.current.reset();
   };
+
   return (
     <form
       ref={formRef}
@@ -66,11 +78,12 @@ const SelectAll = ({ resetPoke, setPoke, pokeKeys, pokes, setAbi }) => {
       {pokeKeys.map((pokeKey) => {
         return (
           <SelectMon
-            pokes={pokes}
+            team={team}
             setAbi={setAbi}
             pokeKey={pokeKey}
             fetchPoke={fetchPoke}
             setPoke={setPoke}
+            pokeData={pokeData}
             key={pokeKey}
           />
         );

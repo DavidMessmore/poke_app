@@ -1,12 +1,12 @@
 import { SET_POKE, RESET_POKE, SET_ABI } from "./actions";
-import { defaultState } from "./Typechart";
+import { defaultState } from "./AppLogic";
 
 const reducer = (state, action) => {
   if (action.type === SET_POKE) {
     return {
       ...state,
-      pokes: {
-        ...state.pokes,
+      team: {
+        ...state.team,
         [action.payload.newPoke.id]: action.payload.newPoke.updatedPoke,
       },
     };
@@ -17,12 +17,12 @@ const reducer = (state, action) => {
   if (action.type === SET_ABI) {
     return {
       ...state,
-      pokes: {
-        ...state.pokes,
+      team: {
+        ...state.team,
         [action.payload.newAbi.id]: {
-          ...state.pokes[action.payload.newAbi.id],
+          ...state.team[action.payload.newAbi.id],
           ability: {
-            ...state.pokes[action.payload.newAbi.id].ability,
+            ...state.team[action.payload.newAbi.id].ability,
             selected: action.payload.newAbi.currentAbi,
           },
         },

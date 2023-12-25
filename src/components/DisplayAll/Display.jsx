@@ -1,4 +1,4 @@
-import image from "../../../assets/pokeball.svg";
+import image from "../../assets/pokeball.svg";
 import { memo } from "react";
 
 const Display = ({ src, types, name }) => {
